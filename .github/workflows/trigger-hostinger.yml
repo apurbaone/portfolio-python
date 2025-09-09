@@ -1,0 +1,45 @@
+name: CI + Trigger Hostinger Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: Quick checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install deps (fast)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt || true
+      - name: Smoke (no-op placeholder)
+        run: |
+          echo "No automated tests configured; skipping."
+
+  trigger-deploy:
+    name: Trigger Hostinger Deploy
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Hostinger deploy webhook
+        env:
+          DEPLOY_URL: ${{ secrets.HOSTINGER_DEPLOY_URL }}
+        run: |
+          # Fallback URL (public webhook link provided by user)
+          FALLBACK_URL="https://github.com/apurbaone/portfolio-python/settings/hooks/new"
+
+          # Use secret if available, otherwise use the fallback
+          if [ -z "$DEPLOY_URL" ]; then
+            echo "HOSTINGER_DEPLOY_URL secret is not set; using provided fallback webhook URL"
+            DEPLOY_URL="$FALLBACK_URL"
+          fi
+
+          echo "Triggering Hostinger deploy to $DEPLOY_URL"
+          curl -Ssf -X POST "$DEPLOY_URL" -H "Content-Type: application/json" -d '{"ref":"refs/heads/main"}'
+          echo "Webhook POSTed"
