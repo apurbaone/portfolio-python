@@ -32,7 +32,7 @@ jobs:
           DEPLOY_URL: ${{ secrets.HOSTINGER_DEPLOY_URL }}
         run: |
           # Fallback URL (public webhook link provided by user)
-          FALLBACK_URL="https://github.com/apurbaone/portfolio-python/settings/hooks/new"
+          FALLBACK_URL="https://webhooks.hostinger.com/deploy/2f34fb6a152a242966e00349646a71a9"
 
           # Use secret if available, otherwise use the fallback
           if [ -z "$DEPLOY_URL" ]; then
