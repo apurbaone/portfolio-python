@@ -1,0 +1,6 @@
+{
+  "name": "apurbaone/portfolio-python",
+  "description": "Placeholder composer.json to satisfy Hostinger hPanel deploy checks. This project is Python/Django; composer is not used.",
+  "type": "project",
+  "require": {}
+}
