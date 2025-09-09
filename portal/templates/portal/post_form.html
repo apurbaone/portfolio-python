@@ -1,0 +1,162 @@
+{% extends 'portal/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="portal-post-form" style="max-width:1100px;margin:3vh auto;background:#0b0b0d;color:#fff;border-radius:10px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.6);">
+  <div style="background:linear-gradient(90deg,#8b0000,#6b0000);color:#fff;padding:14px 18px;font-weight:700;text-align:center;font-size:16px;">PORTAL — New / Edit Post</div>
+  {% if messages %}
+    <div style="padding:12px;">
+      {% for m in messages %}
+        <div style="padding:8px;border-radius:6px;margin-bottom:6px;">{{ m }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+  {% if form.errors %}
+    <div style="padding:12px;color:#ffb3b3;background:#3a0b0b;border-radius:6px;margin:12px;">
+      <strong>Form errors:</strong>
+      <ul>
+        {% for field, errs in form.errors.items %}
+          <li>{{ field }}: {{ errs|join:', ' }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+  <div style="display:flex;gap:0;align-items:stretch;">
+    <form id="post-main-form" method="post" enctype="multipart/form-data" style="display:flex;gap:20px;align-items:flex-start;">
+      {% csrf_token %}
+      <div style="flex:1;display:flex;flex-direction:column;gap:12px;padding:20px;">
+        <div>
+          {{ form.title }}
+        </div>
+        <div style="display:flex;gap:12px;">
+          <div style="flex:1;">
+            <label style="display:block;font-weight:600;margin-bottom:6px;color:#bbb;">Slug</label>
+            {{ form.slug }}
+          </div>
+          <div style="width:260px;">
+            <label style="display:block;font-weight:600;margin-bottom:6px;color:#bbb;">Excerpt</label>
+            {{ form.excerpt }}
+          </div>
+        </div>
+
+        <div>
+          <label style="display:block;font-weight:600;margin-bottom:6px;color:#bbb;">Body</label>
+          {{ form.body }}
+        </div>
+
+        <section style="margin-top:8px;">
+          <h3 style="margin:0 0 8px 0;color:#ddd;">Gallery</h3>
+          <div id="gallery-drop" style="border:2px dashed #222;padding:14px;border-radius:8px;background:#070708;color:#ccc;min-height:90px;display:flex;align-items:center;justify-content:center;flex-direction:column;">
+            <p style="margin:0 0 8px 0;">Drag & drop images here or click to select (multiple)</p>
+            <input id="gallery-input" form="post-main-form" type="file" name="gallery" multiple accept="image/*" style="display:block;margin-top:8px;" />
+            <button id="gallery-btn" class="btn" style="background:#202124;padding:8px 12px;margin-top:8px;">Choose images</button>
+            <div id="gallery-preview" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;justify-content:flex-start;width:100%;"></div>
+          </div>
+        </section>
+
+        <div style="display:flex;gap:12px;margin-top:10px;">
+          <button id="save-btn" type="submit" class="btn" style="background:#007acc;padding:10px 14px;border-radius:8px;">Save post</button>
+          {% if not is_new %}<a href="{% url 'portal:preview_post' post.pk %}" class="btn" style="background:#333;padding:10px 14px;border-radius:8px;">Preview</a>{% endif %}
+          <a href="{% url 'portal:dashboard' %}" class="btn" style="background:transparent;border:1px solid #333;color:#bbb;padding:10px 14px;border-radius:8px;">Cancel</a>
+        </div>
+      </div>
+
+      <aside style="width:340px;padding:20px;background:#0e0e10;border-left:1px solid #151515;border-radius:8px;">
+        <h3 style="margin-top:0;color:#fff;">Post settings</h3>
+        <div style="margin-bottom:12px;">
+          <label style="display:block;font-weight:600;margin-bottom:6px;color:#bbb;">Banner image</label>
+          <div style="margin-bottom:8px;">
+            {% if not is_new and post.banner_image %}
+              <img src="{{ post.banner_image.url }}" alt="banner" style="width:100%;height:180px;object-fit:cover;border-radius:6px;margin-bottom:6px;" />
+            {% else %}
+              <div style="width:100%;height:180px;background:#0b0b0b;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#666;margin-bottom:6px;">Banner preview</div>
+            {% endif %}
+            {{ form.banner_image }}
+            <div style="margin-top:6px;font-size:13px;color:#bbb;">If you don't see a control above, use this fallback:<br>
+              <label for="fallback-banner" class="btn" style="margin-top:6px;display:inline-block;">Choose banner</label>
+              <input id="fallback-banner" type="file" accept="image/*" style="display:inline-block;" />
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:8px;">
+          <h4 style="margin:0 0 8px 0;color:#ddd;">Existing images</h4>
+          {% if not is_new and post.gallery.exists %}
+          <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            {% for img in post.gallery.all %}
+            <div style="width:140px;text-align:center;color:#fff;">
+              {% if img.thumbnail %}
+                <img src="{{ img.thumbnail.url }}" style="width:140px;height:88px;object-fit:cover;border-radius:6px;display:block;margin-bottom:6px;" />
+              {% else %}
+                <img src="{{ img.image.url }}" style="width:140px;height:88px;object-fit:cover;border-radius:6px;display:block;margin-bottom:6px;" />
+              {% endif %}
+              <form method="post" action="{% url 'portal:delete_gallery_image' img.pk %}">{% csrf_token %}<button type="submit" style="background:#600;padding:6px 8px;border-radius:4px;">Delete</button></form>
+            </div>
+            {% endfor %}
+          </div>
+          {% else %}
+            <div style="color:#777;font-size:13px;">No gallery images yet.</div>
+          {% endif %}
+        </div>
+      </aside>
+    </form>
+    </form>
+  </div>
+</div>
+
+<script>
+// gallery preview + drag & drop (keeps native inputs)
+const galleryDrop = document.getElementById('gallery-drop');
+const galleryInput = document.getElementById('gallery-input');
+const galleryBtn = document.getElementById('gallery-btn');
+const preview = document.getElementById('gallery-preview');
+
+galleryBtn.addEventListener('click', ()=> galleryInput.click());
+galleryInput.addEventListener('change', e => renderPreviews(e.target.files));
+
+['dragenter','dragover'].forEach(ev => galleryDrop.addEventListener(ev, e=>{ e.preventDefault(); galleryDrop.style.borderColor='#444'; }));
+['dragleave','drop'].forEach(ev => galleryDrop.addEventListener(ev, e=>{ e.preventDefault(); galleryDrop.style.borderColor='#222'; }));
+galleryDrop.addEventListener('drop', e=>{
+  const files = Array.from(e.dataTransfer.files).filter(f=>f.type.startsWith('image/'));
+  if(files.length) { galleryInput.files = fileListFromArray(files); renderPreviews(files); }
+});
+
+function fileListFromArray(files){
+  const dataTransfer = new DataTransfer();
+  files.forEach(f=>dataTransfer.items.add(f));
+  return dataTransfer.files;
+}
+
+function renderPreviews(files){
+  preview.innerHTML = '';
+  Array.from(files).forEach(file=>{
+    const el = document.createElement('div'); el.style.width='140px'; el.style.textAlign='center'; el.style.color='#fff';
+    const img = document.createElement('img'); img.style.width='140px'; img.style.height='90px'; img.style.objectFit='cover'; img.style.borderRadius='6px'; img.src = URL.createObjectURL(file);
+    const lbl = document.createElement('div'); lbl.style.fontSize='12px'; lbl.style.marginTop='6px'; lbl.textContent = file.name;
+    el.appendChild(img); el.appendChild(lbl); preview.appendChild(el);
+  });
+}
+
+// fallback banner input copy to form field
+const fallbackBanner = document.getElementById('fallback-banner');
+const realBanner = document.querySelector('input[name="banner_image"]');
+if(fallbackBanner && realBanner){
+  fallbackBanner.addEventListener('change', e=>{ const f = e.target.files[0]; if(f){ const dt=new DataTransfer(); dt.items.add(f); realBanner.files = dt.files; } });
+}
+
+// Banner preview
+if(realBanner){
+  realBanner.addEventListener('change', e=>{
+    const f = e.target.files[0];
+    if(!f) return;
+    const img = document.createElement('img'); img.style.width='100%'; img.style.height='120px'; img.style.objectFit='cover'; img.style.borderRadius='6px'; img.src = URL.createObjectURL(f);
+    const parent = realBanner.closest('div');
+    const existing = parent.querySelector('.banner-preview-temp');
+    if(existing) existing.remove();
+    img.classList.add('banner-preview-temp');
+    parent.insertBefore(img, realBanner);
+  });
+}
+</script>
+
+{% endblock %}

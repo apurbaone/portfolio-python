@@ -1,0 +1,14 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block extrahead %}
+  <link rel="stylesheet" href="{% static 'admin/css/custom_admin.css' %}">
+  {{ block.super }}
+{% endblock %}
+
+{% block title %}Apurba.one administration{% endblock %}
+
+{% block branding %}
+  <a href="{% url 'admin:index' %}" class="admin-brand">Apurba.one</a>
+  <span class="admin-badge">portal v2</span>
+{% endblock %}

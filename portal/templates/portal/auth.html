@@ -1,0 +1,36 @@
+{% extends 'portal/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="card">
+  <h2>Authentication & Authorization</h2>
+  <p>Users (toggle staff):</p>
+  <table class="table-compact">
+    <thead><tr><th>User</th><th>Staff</th><th>Superuser</th><th>Actions</th></tr></thead>
+    <tbody>
+      {% for u in users %}
+      <tr>
+        <td>{{ u.username }}{% if u.email %} <small>{{ u.email }}</small>{% endif %}</td>
+        <td>{{ u.is_staff }}</td>
+        <td>{{ u.is_superuser }}</td>
+        <td>
+          <form method="post" action="{% url 'portal:toggle_staff' u.pk %}">{% csrf_token %}
+            <button class="btn" type="submit">Toggle staff</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <hr />
+  <h3>Groups</h3>
+  <ul>
+    {% for g in groups %}
+      <li>{{ g.name }}</li>
+    {% empty %}
+      <li>No groups defined.</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

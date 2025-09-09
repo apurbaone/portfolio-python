@@ -1,0 +1,30 @@
+{% extends 'portal/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="card">
+  <div style="display:flex;justify-content:space-between;align-items:center;">
+    <h2 style="margin:0">Posts</h2>
+    <a href="{% url 'portal:new_post' %}" class="btn">New post</a>
+  </div>
+  <div style="margin-top:12px;">
+    <table class="table-compact">
+      <thead><tr><th>Title</th><th>Published</th><th>Action</th></tr></thead>
+      <tbody>
+        {% for p in posts %}
+        <tr>
+          <td><a href="{{ p.get_absolute_url }}">{{ p.title }}</a></td>
+          <td>{{ p.published }}</td>
+          <td>
+            <a href="{% url 'portal:edit_post' p.pk %}">Edit</a> |
+            <form action="{% url 'portal:delete_post' p.pk %}" method="post" style="display:inline">{% csrf_token %}<button type="submit" style="background:transparent;border:none;color:#d00;cursor:pointer;">Delete</button></form>
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="3">No posts</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

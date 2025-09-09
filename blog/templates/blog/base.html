@@ -1,0 +1,121 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>{% block title %}My Portfolio{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Merriweather:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'blog/css/style.css' %}">
+
+  {# set the hero image here; replace with your photo at static/blog/images/hero-bg12.jpg #}
+  {# Favicons: prefer multi-size .ico + PNG fallbacks for wide browser support #}
+  <link rel="icon" href="{% static 'blog/images/favicon.ico' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'blog/images/favicon-32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'blog/images/favicon-16.png' %}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'blog/images/apple-touch-icon-180.png' %}">
+  <link rel="manifest" href="{% static 'manifest.json' %}">
+    <style>
+      :root{--hero-image: url('{% static "blog/images/hero-bg12.jpg" %}');}
+    </style>
+  </head>
+  <body>
+    <header class="mobile-header" role="banner">
+      <a class="logo" href="/">Apurba Barai</a>
+      <button class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav">
+        <svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 1h20M0 7h20M0 13h20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+    </header>
+    <div class="site-shell">
+      <aside class="left-nav" aria-label="Main navigation">
+        <div class="nav-inner">
+          <div class="left-top">
+            <img src="{% static 'blog/images/pp400.png' %}" alt="Apurba Barai" class="avatar">
+            <div class="name-and-social">
+              <a class="logo" href="/">Apurba Barai</a>
+              <div class="social-icons">
+                <a href="https://github.com/your-github" target="_blank" rel="noopener" aria-label="GitHub">
+                  <!-- GitHub SVG -->
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 .5C5.73.5.75 5.48.75 11.78c0 4.95 3.2 9.15 7.64 10.63.56.1.76-.24.76-.53 0-.26-.01-1.12-.02-2.03-3.11.68-3.77-1.5-3.77-1.5-.51-1.3-1.24-1.65-1.24-1.65-1.02-.7.08-.69.08-.69 1.13.08 1.73 1.17 1.73 1.17 1 .+.." fill="currentColor"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn">
+                  <!-- LinkedIn SVG -->
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.48 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.22 8h4.52V24H.22zM8.98 8h4.34v2.16h.06c.6-1.14 2.06-2.34 4.24-2.34 4.54 0 5.38 2.98 5.38 6.84V24h-4.54v-7.44c0-1.78-.03-4.06-2.48-4.06-2.48 0-2.86 1.94-2.86 3.94V24H8.98V8z" fill="currentColor"/></svg>
+                </a>
+                <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram">
+                  <!-- Instagram SVG -->
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm5 5.75A4.25 4.25 0 1016.25 12 4.25 4.25 0 0012 7.75zm6.5-1.88a1.13 1.13 0 11-1.13-1.13 1.13 1.13 0 011.13 1.13z" fill="currentColor"/></svg>
+                </a>
+                <a href="mailto:mail@apurba.one" aria-label="Email">
+                  <!-- Mail SVG -->
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 4h20v16H2z" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M22 6l-10 7L2 6" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <nav class="nav" role="navigation" aria-label="Primary">
+            <a href="/" class="nav-link {% if request.path == '/' %}active{% endif %}" title="Home" {% if request.path == '/' %}aria-current="page"{% endif %}>
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 10.5L12 4l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10.5z" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+              </span>
+              <span class="nav-text">Home</span>
+            </a>
+
+            <a href="#about" class="nav-link" title="About">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="3" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M5 20c1-4 6-6 7-6s6 2 7 6" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+              </span>
+              <span class="nav-text">About</span>
+            </a>
+
+            <a href="#skills" class="nav-link" title="Skills">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2v4" stroke="currentColor" stroke-width="1.4"/><path d="M12 18v4" stroke="currentColor" stroke-width="1.4"/><path d="M4.9 4.9l2.8 2.8" stroke="currentColor" stroke-width="1.4"/><path d="M16.3 16.3l2.8 2.8" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+              </span>
+              <span class="nav-text">Skills</span>
+            </a>
+
+            <a href="#portfolio" class="nav-link" title="Portfolio">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="7" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M7 7V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v2" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+              </span>
+              <span class="nav-text">Portfolio</span>
+            </a>
+
+            <a href="#contact" class="nav-link" title="Contact">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5h18v14H3z" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M3 7l9 6 9-6" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+              </span>
+              <span class="nav-text">Contact</span>
+            </a>
+
+            <a href="/blog/" class="nav-link {% if request.path|slice:":6" == '/blog/' or request.path == '/blog/' %}active{% endif %}" title="Blog" {% if request.path|slice:":6" == '/blog/' or request.path == '/blog/' %}aria-current="page"{% endif %}>
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 19h16V5H4v14z" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M8 9h8M8 13h6" stroke="currentColor" stroke-width="1.2"/></svg>
+              </span>
+              <span class="nav-text">Blog</span>
+            </a>
+          </nav>
+        </div>
+      </aside>
+      <div class="nav-overlay" aria-hidden="true"></div>
+
+      <div class="content-area">
+        <main>
+          {% block content %}{% endblock %}
+        </main>
+
+        <footer class="site-footer">
+          <div class="container">
+              <p>&copy; {{ now|date:"Y" }} Apurba Barai</p>
+          </div>
+        </footer>
+      </div>
+    </div>
+  <script src="{% static 'blog/js/typing.js' %}" defer></script>
+  <script src="{% static 'blog/js/mobile-nav.js' %}" defer></script>
+  </body>
+</html>

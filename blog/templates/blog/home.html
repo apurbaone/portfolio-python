@@ -1,0 +1,186 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block title %}Home — My Portfolio{% endblock %}
+
+{% block content %}
+<section class="hero">
+        <div class="container hero-inner">
+            <h1 class="hero-title">Apurba Barai</h1>
+            <p class="hero-sub">I am a <span id="typed-placeholder" class="typed"></span></p>
+        </div>
+</section>
+
+<section id="about" class="about container">
+    <h2>About</h2>
+    <div class="about-grid">
+        <div class="about-text">
+            <p class="lead">When technology meets creativity...</p>
+            <p><strong>Engineer Traveller Dreamer</strong></p>
+            <ul class="meta">
+                <li>Age: 32</li>
+                <li>City: Dhaka, Bangladesh</li>
+                <li>Birthday: Can't Disclose</li>
+                <li>Degree: BSc in Computer Engineering</li>
+                <li>Occupation: System Administrator</li>
+            </ul>
+            <p>I am an outdoor enthusiast and a cyclist. I use my “Fawn”, a model of Raily Bicycle for my daily commute and to travel the countryside. I am an experienced volunteer member in multiple travelling clubs. Since 2009 I have been participating in different expedition trips, rescue operations in crisis periods and different events here in Bangladesh.</p>
+            <p>Check out my <a href="/blog/">Blog</a> to see more from me and my photo below.</p>
+        </div>
+        <div class="about-image">
+            <img src="{% static 'blog/images/myimg.jpeg' %}" alt="Apurba Barai" />
+        </div>
+    </div>
+</section>
+
+<section id="skills" class="skills container">
+    <h2>Skills</h2>
+    <p>Check out my <a href="https://github.com/your-github" target="_blank" rel="noopener">GitHub page</a> to find out more about my portfolio.</p>
+
+    <p>Below you can find a set of Servers, Scripts and Technologies I have worked with assessed using a mildly accurate scale.</p>
+
+    <div class="skills-grid">
+        <div class="skill"><div class="skill-name">HTML/CSS</div><div class="skill-bar"><div class="skill-fill" style="width:95%"></div><span class="skill-percent">95%</span></div></div>
+        <div class="skill"><div class="skill-name">Bootstrap</div><div class="skill-bar"><div class="skill-fill" style="width:90%"></div><span class="skill-percent">90%</span></div></div>
+        <div class="skill"><div class="skill-name">PHP/Laravel</div><div class="skill-bar"><div class="skill-fill" style="width:90%"></div><span class="skill-percent">90%</span></div></div>
+        <div class="skill"><div class="skill-name">AWS</div><div class="skill-bar"><div class="skill-fill" style="width:80%"></div><span class="skill-percent">80%</span></div></div>
+        <div class="skill"><div class="skill-name">Azure</div><div class="skill-bar"><div class="skill-fill" style="width:70%"></div><span class="skill-percent">70%</span></div></div>
+        <div class="skill"><div class="skill-name">Blackbase</div><div class="skill-bar"><div class="skill-fill" style="width:80%"></div><span class="skill-percent">80%</span></div></div>
+        <div class="skill"><div class="skill-name">VM</div><div class="skill-bar"><div class="skill-fill" style="width:75%"></div><span class="skill-percent">75%</span></div></div>
+        <div class="skill"><div class="skill-name">BDIX</div><div class="skill-bar"><div class="skill-fill" style="width:80%"></div><span class="skill-percent">80%</span></div></div>
+        <div class="skill"><div class="skill-name">WHM</div><div class="skill-bar"><div class="skill-fill" style="width:100%"></div><span class="skill-percent">100%</span></div></div>
+        <div class="skill"><div class="skill-name">Git</div><div class="skill-bar"><div class="skill-fill" style="width:80%"></div><span class="skill-percent">80%</span></div></div>
+        <div class="skill"><div class="skill-name">Docker</div><div class="skill-bar"><div class="skill-fill" style="width:70%"></div><span class="skill-percent">70%</span></div></div>
+        <div class="skill"><div class="skill-name">Virtualmin</div><div class="skill-bar"><div class="skill-fill" style="width:90%"></div><span class="skill-percent">90%</span></div></div>
+        <div class="skill"><div class="skill-name">Cpannel</div><div class="skill-bar"><div class="skill-fill" style="width:70%"></div><span class="skill-percent">70%</span></div></div>
+        <div class="skill"><div class="skill-name">Zimra</div><div class="skill-bar"><div class="skill-fill" style="width:80%"></div><span class="skill-percent">80%</span></div></div>
+        <div class="skill"><div class="skill-name">SQL</div><div class="skill-bar"><div class="skill-fill" style="width:60%"></div><span class="skill-percent">60%</span></div></div>
+        <div class="skill"><div class="skill-name">Firebase</div><div class="skill-bar"><div class="skill-fill" style="width:60%"></div><span class="skill-percent">60%</span></div></div>
+        <div class="skill"><div class="skill-name">Microtic</div><div class="skill-bar"><div class="skill-fill" style="width:70%"></div><span class="skill-percent">70%</span></div></div>
+    </div>
+</section>
+
+<section id="portfolio" class="portfolio container">
+    <h2>Portfolio — Live Projects</h2>
+    <div class="portfolio-grid">
+        <article class="project-card">
+            <h3>E-commerce</h3>
+            <p class="muted">Single Website for E-commerce Business</p>
+            <p class="project-actions"><a class="btn" href="skinnsoul.shop">Visit The Website</a></p>
+        </article>
+
+        <article class="project-card">
+            <h3>Restaurant</h3>
+            <p class="muted">Restaurant with booking Table</p>
+            <p class="project-actions"><a class="btn" href="delareina.cafe">Website</a></p>
+        </article>
+
+        <article class="project-card">
+            <h3>Car Import and Service</h3>
+            <p class="muted">Website for car Business</p>
+        </article>
+
+        <article class="project-card">
+            <h3>Travel Booking Web Application</h3>
+            <p class="muted">Website for an event</p>
+            <p class="project-actions"><a class="btn" href="lunatravelers.com">Visit</a></p>
+        </article>
+
+        <article class="project-card">
+            <h3>Laravel Inventory with E-commerce</h3>
+            <p class="muted">Inventory + E-commerce</p>
+            <p class="project-actions"><a class="btn" href="yapgen.com">See Here</a></p>
+        </article>
+
+        <article class="project-card">
+            <h3>Urban Firm Project</h3>
+            <p class="muted">On Going Project</p>
+            <p class="project-actions"><a class="btn" href="#">Visit website</a></p>
+        </article>
+
+        <article class="project-card">
+            <h3>Machine Code</h3>
+            <p class="muted">Simple Machine Code for Water Level Measurement</p>
+            <p class="project-actions"><a class="btn" href="#">Git link Here</a></p>
+        </article>
+
+        <article class="project-card">
+            <h3>Volunteer Group portfolio</h3>
+            <p class="muted"></p>
+        </article>
+
+        <article class="project-card">
+            <h3>Space Lander game</h3>
+            <p class="muted">Usingit</p>
+        </article>
+    </div>
+</section>
+
+
+
+<section class="latest-posts container">
+    <h2>Latest posts</h2>
+    <div class="latest-grid" style="display:flex;gap:18px;flex-wrap:wrap;align-items:stretch;">
+        {% for post in latest %}
+            <article class="latest-card" style="width:320px;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.08);">
+                {% if post.banner_image %}
+                    <a href="/blog/{{ post.slug }}/"><img src="{{ post.banner_image.url }}" alt="{{ post.title }}" style="width:100%;height:160px;object-fit:cover;display:block;" /></a>
+                {% else %}
+                    <a href="/blog/{{ post.slug }}/"><div style="width:100%;height:160px;background:#eee;display:flex;align-items:center;justify-content:center;color:#666;">No image</div></a>
+                {% endif %}
+                <div style="padding:12px;">
+                    <h3 style="margin:0 0 6px 0;font-size:18px;"><a href="/blog/{{ post.slug }}/" style="color:#222;text-decoration:none;">{{ post.title }}</a></h3>
+                    <div style="color:#777;font-size:13px;margin-bottom:8px;">{{ post.published|date:"M d, Y" }}</div>
+                    <p style="margin:0;color:#444;">{{ post.excerpt|default:post.excerpt_preview|truncatechars:120 }}</p>
+                </div>
+            </article>
+        {% empty %}
+            <div>No posts yet.</div>
+        {% endfor %}
+    </div>
+    <p style="margin-top:14px;"><a href="/blog/">Read more posts →</a></p>
+</section>
+
+<section id="contact" class="contact container">
+    <h2>Contact</h2>
+    <div class="contact-grid">
+        <div class="contact-intro card">
+            <h3>Get in touch</h3>
+            <p class="muted">Questions, collaborations or project inquiries — I usually reply within a few days.</p>
+            <p>If you have work, an idea or just want to say hi, use the form on the right or the contact details below.</p>
+        </div>
+
+        <div class="contact-right">
+            <div class="contact-details card">
+                <h3>Contact</h3>
+                <ul class="contact-list">
+                    <li><strong>Call</strong><br/><a href="tel:+8801534906092">+88 01534906092</a></li>
+                    <li><strong>Personal Email</strong><br/><a href="mailto:one.apurba@gmail.com">one.apurba@gmail.com</a></li>
+                    <li><strong>WEB Email</strong><br/><a href="mailto:mail@apurba.one">mail@apurba.one</a></li>
+                    <li><strong>Location</strong><br/>Dhaka, Bangladesh</li>
+                </ul>
+            </div>
+
+            <form class="contact-form card" action="{% url 'contact' %}" method="post">
+                {% csrf_token %}
+                <label for="name">Your Name</label>
+                <input id="name" name="name" type="text" placeholder="Your name" required />
+
+                <label for="email">Your Email</label>
+                <input id="email" name="email" type="email" placeholder="you@domain.com" required />
+
+                <label for="subject">Subject</label>
+                <input id="subject" name="subject" type="text" placeholder="Subject" />
+
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="5" placeholder="Write your message"></textarea>
+
+                <div class="form-actions">
+                    <button class="btn" type="submit">Send Message</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

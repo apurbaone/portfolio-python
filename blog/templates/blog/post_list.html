@@ -1,0 +1,49 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block title %}Blog — Posts{% endblock %}
+
+{% block content %}
+{% comment %} Blog index: cleaner list with thumbnail + summary {% endcomment %}
+<div class="container">
+    <h1>Blog</h1>
+
+    <div class="blog-list">
+        {% for post in posts_page %}
+            <article class="post-item">
+                <a class="post-thumb" href="{{ post.get_absolute_url }}">
+                    {% if post.banner_image %}
+                        <img src="{{ post.banner_image.url }}" alt="{{ post.title }}" loading="lazy" />
+                    {% elif post.image %}
+                        <div style="background-image:url('{% static post.image %}');height:140px;background-size:cover;background-position:center;border-radius:6px"></div>
+                    {% else %}
+                        <div class="no-thumb">No image</div>
+                    {% endif %}
+                </a>
+
+                <div class="post-summary">
+                    <h2 class="post-title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+                    <div class="post-meta">{{ post.published|date:"M d, Y" }}</div>
+                    <p class="post-excerpt">{{ post.excerpt_preview|safe }}</p>
+                    <p><a class="btn" href="{{ post.get_absolute_url }}">Read more →</a></p>
+                </div>
+            </article>
+        {% empty %}
+            <p>No posts yet.</p>
+        {% endfor %}
+    </div>
+
+    {% if posts_page.has_other_pages %}
+        <div class="pagination">
+            {% if posts_page.has_previous %}
+                <a href="?page={{ posts_page.previous_page_number }}">← Newer</a>
+            {% endif %}
+            <span>Page {{ posts_page.number }} of {{ posts_page.paginator.num_pages }}</span>
+            {% if posts_page.has_next %}
+                <a href="?page={{ posts_page.next_page_number }}">Older →</a>
+            {% endif %}
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}

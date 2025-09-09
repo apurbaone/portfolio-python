@@ -1,0 +1,106 @@
+{% extends 'portal/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="card">
+  {% if messages %}
+    <div style="padding:12px;">
+      {% for m in messages %}
+        <div style="padding:8px;border-radius:6px;margin-bottom:6px;">{{ m }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+  <div style="display:flex;justify-content:space-between;align-items:center;">
+    <h2 style="margin:0">Overview</h2>
+    <div>
+      <a href="{% url 'portal:new_post' %}" class="btn">New Post</a>
+    </div>
+  </div>
+
+  <section style="margin-top:18px;">
+    <h3>Posts <small style="color:#aaa;">({{ post_count }})</small></h3>
+    <table class="table-compact">
+      <thead><tr><th>Title</th><th>Visible</th><th>Action</th></tr></thead>
+      <tbody>
+        {% for pp in portal_posts %}
+        <tr>
+          <td><a href="{{ pp.post.get_absolute_url }}">{{ pp.post.title }}</a></td>
+          <td>{{ pp.visible }}</td>
+          <td>
+            <a href="{% url 'portal:edit_post' pp.post.pk %}">Edit</a> |
+            <button class="toggle-btn" data-pk="{{ pp.pk }}">Toggle</button> |
+            <form action="{% url 'portal:delete_post' pp.post.pk %}" method="post" style="display:inline">{% csrf_token %}<button type="submit" style="background:transparent;border:none;color:#d00;cursor:pointer;">Delete</button></form>
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="3">No posts</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+
+  <section style="margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+    <div>
+      <h3>Recent visitors</h3>
+      <div class="card">
+        <table class="table-compact">
+          <thead><tr><th>IP</th><th>Path</th><th>When</th></tr></thead>
+          <tbody>
+            {% for v in recent_visitors %}
+            <tr><td>{{ v.ip }}</td><td>{{ v.path }}</td><td>{{ v.timestamp }}</td></tr>
+            {% empty %}
+            <tr><td colspan="3">No visitors yet</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div>
+      <h3>All visitors</h3>
+      <div class="card">
+        <table class="table-compact">
+          <thead><tr><th>IP</th><th>Path</th><th>When</th></tr></thead>
+          <tbody>
+            {% for v in all_visitors %}
+            <tr><td>{{ v.ip }}</td><td>{{ v.path }}</td><td>{{ v.timestamp }}</td></tr>
+            {% empty %}
+            <tr><td colspan="3">No visitors yet</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+document.querySelectorAll('.toggle-btn').forEach(function(b){
+  b.addEventListener('click', function(){
+    var pk = this.dataset.pk;
+    fetch('{% url "portal:toggle_visibility" 0 %}'.replace('/0/', '/' + pk + '/'), {
+      method: 'POST',
+      headers: {'X-CSRFToken': getCookie('csrftoken')}
+    }).then(r=>r.json()).then(data=>{
+      if(data.ok){ location.reload(); }
+    });
+  });
+});
+
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+</script>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'admin/base_site.html' %}
+{% load i18n %}
+
+{% block content %}
+<div class="portal-admin-dashboard">
+  <div style="display:flex;gap:20px;flex-wrap:wrap;margin-bottom:18px;">
+    <div class="card" style="flex:1;min-width:240px;">
+      <h3>Posts</h3>
+      <p>Manage blog posts.</p>
+      <p><a class="btn" href="/portal/">Open Portal</a> <a class="btn" href="/admin/blog/post/">Django Posts</a></p>
+    </div>
+    <div class="card" style="flex:1;min-width:240px;">
+      <h3>Visitors</h3>
+      <p>View recent visitor logs in the portal.</p>
+      <p><a class="btn" href="/portal/">View Visitors</a></p>
+    </div>
+    <div class="card" style="flex:1;min-width:240px;">
+      <h3>Quick actions</h3>
+      <p><a class="btn" href="/admin/auth/user/add/">Create user</a> <a class="btn" href="/admin/">Admin index</a></p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Recent posts</h3>
+    <ul>
+      {% for item in app_list %}
+        {% if item.app_label == 'blog' %}
+          {% for model in item.models %}
+            {% if model.object_name == 'Post' %}
+              <li><a href="{{ model.admin_url }}">{{ model.name }}</a></li>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock %}

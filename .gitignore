@@ -1,0 +1,25 @@
+# Python
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+*.sqlite3
+
+# Django
+media/
+staticfiles/
+*.log
+.env
+
+# Local runtime files
+.env.local
+
+# IDEs
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

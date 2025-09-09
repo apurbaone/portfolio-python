@@ -1,0 +1,25 @@
+/* Dark portal-style admin overrides */
+body#django-admin-body { background: #070708; color: #e8e8e8; }
+#header { background: #0f0f12; border-bottom: 1px solid #1a1a1a; }
+#header h1 { color: #fff; font-weight:700; }
+.admin-brand { color: #e8e8e8; font-weight:700; text-decoration:none; }
+.admin-badge { background:#2b2b2f;color:#ddd;padding:4px 8px;border-radius:6px;margin-left:8px;font-size:12px;border:1px solid #1f1f23 }
+#content { background: transparent; }
+.module { background:#0d0d0f;border:1px solid #141414 }
+.app-list th, .module h2 { color: #ddd }
+a { color: #9ec8ff }
+.form-row, .submit-row { background: transparent }
+/* Make file inputs clearly visible */
+input[type=file] { color: #ddd; }
+
+/* Adjust admin sidebar */
+#user-tools a { color: #cfcfcf }
+
+/* Tweak buttons */
+input[type=submit], .default, button { background:#1f1f23;color:#fff;border:none }
+
+/* Tables */
+.change-list { border: none }
+
+/* Make admin forms breathing room */
+fieldset.module { padding: 16px; border-radius:6px }

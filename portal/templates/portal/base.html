@@ -1,0 +1,48 @@
+{% load static %}
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Apurba.one administration</title>
+    <link rel="stylesheet" href="{% static 'portal/css/portal.css' %}">
+  </head>
+  <body class="portal-body">
+    {% block header %}
+    <header class="portal-header">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div class="portal-brand">Apurba.one administration</div>
+        <div class="portal-badge">portal v2</div>
+      </div>
+      <nav class="portal-topnav">
+  <a href="{% url 'portal:dashboard' %}">Dashboard</a>
+  <a href="{% url 'portal:edit_list' %}">Posts</a>
+  <a href="{% url 'portal:new_post' %}">New Post</a>
+  <a href="{% url 'portal:auth_index' %}">Authentication</a>
+        <a href="/admin/">Admin</a>
+        <a href="{% url 'logout' %}">Logout</a>
+      </nav>
+    </header>
+    {% endblock %}
+    <div class="portal-container">
+      {% block side %}
+      <aside class="portal-side">
+        <div class="side-section">
+          <h4>Quick links</h4>
+          <ul>
+            <li><a href="{% url 'portal:dashboard' %}">Overview</a></li>
+            <li><a href="{% url 'portal:edit_list' %}">Edit posts</a></li>
+            <li><a href="{% url 'portal:new_post' %}">Create post</a></li>
+          </ul>
+        </div>
+      </aside>
+      {% endblock %}
+      <main class="portal-main">
+        <div class="portal-main-inner">
+          {% block content %}{% endblock %}
+        </div>
+      </main>
+    </div>
+    <footer class="portal-footer">&copy; Apurba.one</footer>
+  </body>
+</html>

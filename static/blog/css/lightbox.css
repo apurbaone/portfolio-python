@@ -1,0 +1,16 @@
+/* Minimal, dependency-free lightbox styles */
+.lightbox{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.85);z-index:9999;padding:20px}
+.lightbox[aria-hidden="true"]{display:none}
+.lightbox-inner{max-width:95%;max-height:90%;text-align:center}
+.lightbox-image{max-width:100%;max-height:80vh;border-radius:6px;box-shadow:0 10px 30px rgba(0,0,0,0.6)}
+.lightbox-caption{color:rgba(255,255,255,0.8);margin-top:10px;font-size:0.95rem}
+.lightbox-close{position:absolute;right:18px;top:14px;background:transparent;border:0;color:#fff;font-size:28px;cursor:pointer;padding:6px;line-height:1}
+.lightbox-close:focus{outline:2px solid rgba(255,255,255,0.08);border-radius:6px}
+
+/* make clickable thumbnails subtly highlighted when JS active */
+.lightbox-trigger:focus{outline:2px solid rgba(124,92,255,0.18);border-radius:6px}
+
+@media (max-width:600px){
+  .lightbox-inner{padding:8px}
+  .lightbox-image{max-height:70vh}
+}

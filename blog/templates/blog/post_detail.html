@@ -1,0 +1,59 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block title %}{{ post.title }} — Blog{% endblock %}
+
+{% block content %}
+<div class="container post-detail">
+    {% if post.banner_image %}
+        <div class="post-hero"><img src="{{ post.banner_image.url }}" alt="{{ post.title }}" loading="lazy" /></div>
+    {% elif post.image %}
+        <div class="post-hero" style="background-image:url('{% static post.image %}')"></div>
+    {% endif %}
+
+    <article class="post-content">
+        <header class="post-header">
+            <h1 class="post-title">{{ post.title }}</h1>
+            <div class="post-meta">Published: {{ post.published|date:"M d, Y" }}</div>
+            {% if post.excerpt %}
+                <p class="post-excerpt">{{ post.excerpt }}</p>
+            {% endif %}
+        </header>
+
+        <div class="content-body">{{ post.body|linebreaks|safe }}</div>
+
+        {% if post.gallery.exists %}
+        <section class="post-gallery">
+            <h3 class="gallery-heading">Gallery</h3>
+            <div class="gallery-grid">
+                {% for img in post.gallery.all %}
+                    <a class="gallery-item lightbox-trigger" href="{{ img.image.url }}" data-caption="{{ img.caption|escape }}">
+                        <div class="thumb-wrap">
+                        {% if img.thumbnail %}
+                            <img src="{{ img.thumbnail.url }}" alt="{{ img.caption }}" loading="lazy" />
+                        {% else %}
+                            <img src="{{ img.image.url }}" alt="{{ img.caption }}" loading="lazy" />
+                        {% endif %}
+                            {% if img.caption %}<div class="thumb-caption">{{ img.caption }}</div>{% endif %}
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+    </article>
+
+    <!-- Lightbox markup -->
+    <div id="lightbox" class="lightbox" aria-hidden="true">
+        <button class="lightbox-close" aria-label="Close">×</button>
+        <div class="lightbox-inner">
+            <img class="lightbox-image" src="#" alt="" />
+            <div class="lightbox-caption"></div>
+        </div>
+    </div>
+
+    <link rel="stylesheet" href="{% static 'blog/css/lightbox.css' %}">
+    <script src="{% static 'blog/js/lightbox.js' %}"></script>
+</div>
+{% endblock %}
