@@ -41,5 +41,17 @@ jobs:
           fi
 
           echo "Triggering Hostinger deploy to $DEPLOY_URL"
-          curl -Ssf -X POST "$DEPLOY_URL" -H "Content-Type: application/json" -d '{"ref":"refs/heads/main"}'
+          # Hostinger's webhook expects form-encoded payload (application/x-www-form-urlencoded)
+          # Send the ref as form data and capture full response and HTTP status for debugging
+          TMP_RESP=$(mktemp)
+          HTTP_CODE=$(curl -s -o "$TMP_RESP" -w "%{http_code}" -X POST "$DEPLOY_URL" -H "Content-Type: application/x-www-form-urlencoded" --data-urlencode "ref=refs/heads/main")
+          BODY=$(cat "$TMP_RESP" 2>/dev/null || true)
+          echo "HTTP $HTTP_CODE"
+          echo "Response body:"
+          echo "$BODY"
+          rm -f "$TMP_RESP"
+          if [ "$HTTP_CODE" -ge 400 ]; then
+            echo "Deploy webhook returned $HTTP_CODE"
+            exit 22
+          fi
           echo "Webhook POSTed"
